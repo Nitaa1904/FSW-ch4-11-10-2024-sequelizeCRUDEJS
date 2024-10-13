@@ -125,39 +125,42 @@ async function UpdateUserById(req, res) {
 }
 
 async function createUser(req, res) {
-    // hasil proses multer
-    console.log(req.file)
-    const split = req.file.originalname.split(".");
-
-    const ext = split[split.lenght -1]
-
-    //upload image ke server
-    const uploadImage = await imagekit.upload({
-        file: req.file.buffer,  // Use req.file to access the uploaded file
-        fileName: `Profile-${Date.now()}.${ext}` // Assuming ext is defined as the file extension
-    });
-    
-    console.log(uploadImage)
-    if (!uploadImage) {  
+    if (!req.file) {
         return res.status(400).json({
             status: "Failed",
-            message: "Image upload failed", 
+            message: "No file uploaded",
             isSuccess: false,
             data: null,
         });
     }
-    
 
-    const newUser = req.body;
+    const split = req.file.originalname.split(".");
+    const ext = split[split.length - 1];
+    const filename = `Profile-${Date.now()}.${ext}`;
 
     try {
-        await User.create({...newUser, photoProfile: uploadImage });
+        const uploadedImage = await imagekit.upload({
+            file: req.file.buffer,
+            fileName: filename,
+        });
+
+        if (!uploadedImage) {
+            return res.status(400).json({
+                status: "Failed",
+                message: "Failed to upload image",
+                isSuccess: false,
+                data: null,
+            });
+        }
+
+        const newUser = req.body;
+        await User.create({ ...newUser, photoProfile: uploadedImage.url });
 
         res.status(200).json({
             status: "Success",
             message: "Successfully added user data",
             isSuccess: true,
-            data: { ...newUser, photoProfile: req.file.path },
+            data: { ...newUser, photoProfile: uploadedImage.url },
         });
     } catch (error) {
         res.status(500).json({

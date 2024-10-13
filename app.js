@@ -4,6 +4,7 @@ const usersRoute = require("./routes/usersRoute");
 const carsRoute = require("./routes/carsRoute");
 const sparepartsRoute = require("./routes/sparepartsRoute");
 const driverRoutes = require("./routes/driverRoute");
+const errorHandling = require('./middleware/errorHandling');
 
 const app = express();
 const port = 3001;
@@ -68,6 +69,9 @@ app.use("/api/v1/users", usersRoute);
 app.use("/api/v1/cars", carsRoute);
 app.use("/api/v1/spareparts", sparepartsRoute);
 app.use("/api/v1/drivers", driverRoutes);
+
+// Error Handling Middleware
+app.use(errorHandling);
 
 // Middleware to handle page not found
 app.use((req, res, next) => {

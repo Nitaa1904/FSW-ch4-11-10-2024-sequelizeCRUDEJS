@@ -1,9 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const carController = require("../controller/carController");
+const upload = require("../middleware/uploader");
 
 // Cars API
-router.post("/", carController.createCar);
+router.post("/", upload.array("carsPhotos"), carController.createCar);
 router.get("/", carController.getAllCars);
 router.get("/:id", carController.getCarById);
 router.delete("/:id", carController.deleteCarById);
