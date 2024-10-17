@@ -6,33 +6,59 @@ async function userPage(req, res) {
     try {
         const users = await User.findAll();
         console.log(users.data)
-        // Render the 'user/index' view, passing the users data
-        res.render("user/index", { 
-            users 
+        res.render("users/index", {
+            title: "User Page",
+            users
         })
     } catch (error) {
-        
         res.render("error", {
             message: error.message
-        });
+        })
     }
 }
 
 
-async function createUser(req, res) {    
-    console.log(req.body)
+
+async function createUser(req, res) {
     const newUser = req.body;
-    try {
-        await User.create({ ...newUser });
-        res.redirect('/dashboard/admin/users')
-    } catch (error) {
-       res.redirect('/error')
+  
+    let uploadedImage = null;
+  
+    if (req.file) {
+      const file = req.file;
+      const split = file.originalname.split(".");
+      const ext = split[split.length - 1];
+      const filename = `Profile-${Date.now()}.${ext}`;
+  
+      try {
+        uploadedImage = await imagekit.upload({
+          file: file.buffer,
+          fileName: filename,
+        });
+      } catch (uploadError) {
+        console.log("Error uploading image:", uploadError);
+        return res.redirect("/error");
+      }
     }
-}
+  
+    try {
+      await User.create({
+        ...newUser,
+        photoProfile: uploadedImage ? uploadedImage.url : null,
+      });
+  
+      res.redirect("/dashboard/admin/users");
+    } catch (error) {
+      console.log("Error creating user:", error);
+      res.redirect("/error");
+    }
+  }
 
 async function createPage(req, res) {
     try {
-        res.render("users/create")
+        res.render("users/create", {
+            title: "Create page",
+        })
     } catch (error) {
         res.render("error", {
             message: error.message
@@ -69,6 +95,7 @@ async function getUserById(req, res) {
         });
     }
 }
+
 
 // Function for delete user by id
 async function deleteUserById(req, res) {

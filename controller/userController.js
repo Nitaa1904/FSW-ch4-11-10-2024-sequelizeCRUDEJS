@@ -125,35 +125,36 @@ async function UpdateUserById(req, res) {
 }
 
 async function createUser(req, res) {
-    if (!req.file) {
+    const file = req.file
+    console.log(file)
+    // processing file nya
+
+    // 1. split utk dpt extension dan file name
+    const split = file.originalname.split(".")
+    // imam.pdf = ['imam', 'pdf'] = length 2 
+    const ext = split[split.length - 1]
+    const filename = split[0]
+
+    // 2. upload image ke server
+    const uploadedImage = await imagekit.upload({
+        file: file.buffer,
+        fileName: `Profile-${filename}-${Date.now()}.${ext}`
+    })
+
+    console.log(uploadedImage)
+
+    if (!uploadedImage) {
         return res.status(400).json({
             status: "Failed",
-            message: "No file uploaded",
+            message: "Failed to add user data because file not define",
             isSuccess: false,
             data: null,
         });
-    }
+    }   
 
-    const split = req.file.originalname.split(".");
-    const ext = split[split.length - 1];
-    const filename = `Profile-${Date.now()}.${ext}`;
+    const newUser = req.body;
 
     try {
-        const uploadedImage = await imagekit.upload({
-            file: req.file.buffer,
-            fileName: filename,
-        });
-
-        if (!uploadedImage) {
-            return res.status(400).json({
-                status: "Failed",
-                message: "Failed to upload image",
-                isSuccess: false,
-                data: null,
-            });
-        }
-
-        const newUser = req.body;
         await User.create({ ...newUser, photoProfile: uploadedImage.url });
 
         res.status(200).json({

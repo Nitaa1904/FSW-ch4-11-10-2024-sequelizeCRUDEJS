@@ -5,6 +5,7 @@ const carsRoute = require("./routes/carsRoute");
 const sparepartsRoute = require("./routes/sparepartsRoute");
 const driverRoutes = require("./routes/driverRoute");
 const dashboardRoutes = require("./routes/dashboardRoute");
+const expressEJSLayout = require("express-ejs-layouts");
 
 const errorHandling = require('./middleware/errorHandling');
 
@@ -55,6 +56,8 @@ app.use(express.static(`${__dirname}/public`));
 // panggil view engine
 // panggil view engine
 app.set("view engine", "ejs");
+app.use(expressEJSLayout);
+app.set("layout", "layout");
 
 app.get("/dashboard/admin/", async (req, res) => {
   try {
@@ -65,15 +68,6 @@ app.get("/dashboard/admin/", async (req, res) => {
     console.log(error)
   }
 })
-
-app.use((req, res, next) => {
-  req.username = "FSW2"
-  // batter loging
-  // penengah untuk lanjut
-  next();
-})
-
-
 
 
 
