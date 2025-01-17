@@ -1,4 +1,4 @@
-# Langkah - Langkah MIDDLEWARE (Upload File, Error Handling)
+# Langkah - Langkah
 
 ## Middleware
 
@@ -80,5 +80,30 @@ noted: file potoProfile yang sudah masuk lokal berbentuk file yang tidak tahu ap
 20. membuat processing file nya || userController
 21. upload image ke server
 22. buat validasi
+    req.file.path diganti uploadedImage.url (13)
 
-- 13. req.file.path diganti uploadedImage.url
+## Dashboard Admin
+
+(menggunakan template engine in express js ejs)
+
+- npm i ejs
+- buat folder views
+  a. panggil view engine di app.js
+  b. buat url/API dashboard (buat file di views/index.ejs)
+  c. middleware : bisa express aplication kita membaca static file || app.js (agar bisa membaca file di public)
+  d. buat Dashboard Route di routes/dashboardRoute.js || panggil di app.js
+  dan buat dashbordController
+
+### get user
+
+e. buat get user di dashboarRoute dan dashboardController
+f. buat di view users/index.ejs (seting isinya agar menarik saat tampil data usernya)
+
+### create user
+
+g. buat create user di dashboardController dan dashboardRoute
+h. buat file users/create.ejs
+i. setting create user di dshboardCntroller
+j. tambah route post di dashbordRoute
+k. Middleware : agar dari view engine form kebaca (request body) nya
+http://localhost:3002/dashboard/admin/

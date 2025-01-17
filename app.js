@@ -5,7 +5,9 @@ const usersRoute = require("./routes/usersRoute");
 const carsRoute = require("./routes/carsRoute");
 const sparepartsRoute = require("./routes/sparepartsRoute");
 const driverRoutes = require("./routes/driverRoute");
+// d. buat Dashboard Route
 const dashboardRoutes = require("./routes/dashboardRoute");
+
 const expressEJSLayout = require("express-ejs-layouts");
 
 const errorHandling = require("./middleware/errorHandling");
@@ -16,7 +18,7 @@ const port = 3002;
 // 1. Middleware Reading json from body (client)
 app.use(express.json());
 
-// Middleware : agar dari view engine form kebaca (request body) nya
+// k. Middleware : agar dari view engine form kebaca (request body) nya
 app.use(express.urlencoded({ extended: false }));
 
 // 6. panggil middleware: logging  (thirdy party package)
@@ -39,17 +41,19 @@ app.use((req, res, next) => {
   next();
 });
 
-//middleware : bisa express aplication kita membaca static file
+// c. middleware : bisa express aplication kita membaca static file
 app.use(express.static(`${__dirname}/public`));
 
-// panggil view engine
-// panggil view engine
+// a. panggil view engine ejs
 app.set("view engine", "ejs");
-app.use(expressEJSLayout);
-app.set("layout", "layout");
 
+// app.use(expressEJSLayout);
+// app.set("layout", "layout");
+
+// b. buat url/API dashboard
 app.get("/dashboard/admin/", async (req, res) => {
   try {
+    // panggil respon render yang ejs
     res.render("index", {
       greeting: "Hello FSW 2 dengan data dinamis, kalian luar biasa",
     });
@@ -76,7 +80,7 @@ app.get("/", async (req, res) => {
   }
 });
 
-// Dashboar route
+// d. buat Dashboard Route
 app.use("/dashboard/admin", dashboardRoutes);
 
 // API Routes
