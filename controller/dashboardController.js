@@ -47,7 +47,7 @@ async function createUser(req, res) {
       photoProfile: uploadedImage ? uploadedImage.url : null,
     });
 
-    res.redirect("/dashboard/admin/users");
+    res.redirect("/users");
   } catch (error) {
     console.log("Error creating user:", error);
     res.redirect("/error");
@@ -73,27 +73,11 @@ async function getUserById(req, res) {
   try {
     const user = await User.findByPk(id);
     if (!user) {
-      return res.status(404).json({
-        status: "Failed",
-        message: "Can't find spesific id user",
-        isSuccess: false,
-        data: null,
-      });
+      return res.status(404).send("User not found");
     }
-    res.status(200).json({
-      status: "Success",
-      message: "Successfully obtained user data",
-      isSuccess: true,
-      data: { user },
-    });
+    res.render("users/userDetail", { user });
   } catch (error) {
-    res.status(500).json({
-      status: "Failed",
-      message: "Failed to get user data",
-      isSuccess: false,
-      data: null,
-      error: error.message,
-    });
+    res.status(500).send("Server Error");
   }
 }
 

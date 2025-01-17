@@ -1,3 +1,66 @@
+body {
+  margin: 0;
+  font-family: "Comic Sans MS", cursive;
+  background-color: #fff6f9;
+  display: flex;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+.sidebar {
+  width: 250px;
+  background-color: #ff85a1;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar h4 {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin: 0;
+  padding: 20px 0;
+  background-color: #ff4b82;
+  color: white;
+  width: 100%;
+  text-align: center;
+  border-bottom: 3px solid #ff85a1;
+}
+
+.sidebar a {
+  text-decoration: none;
+  color: white;
+  font-size: 1.1rem;
+  padding: 10px 20px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  transition: all 0.3s ease;
+  border-radius: 20px;
+  margin: 5px 0;
+}
+
+.sidebar a i {
+  margin-right: 10px;
+  font-size: 1.2rem;
+}
+
+.sidebar a:hover {
+  background-color: #ff4b82;
+  transform: scale(1.05);
+  box-shadow: 0 4px 10px rgba(255, 75, 130, 0.3);
+}
+
+.main-content {
+  flex: 1;
+  padding: 20px;
+}
+.main-content {
+  flex: 1;
+  padding: 20px;
+}
 h1 {
   color: rgb(7, 48, 79);
 }
@@ -5,4 +68,50 @@ h1 {
 img {
   width: 20px;
   height: 20px;
+}
+.text-pink {
+  color: #ff4b82;
+  font-family: "Comic Sans MS", cursive;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(255, 75, 130, 0.3);
+  transition: all 0.3s ease;
+}
+
+.card-title {
+  text-transform: capitalize;
+}
+
+.img-thumbnail {
+  background-color: #fff;
+}
+
+.input-cute {
+  border: 2px solid #ff4b82;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.input-cute:focus {
+  border-color: #ff85a1;
+  box-shadow: 0 0 5px rgba(255, 75, 130, 0.5);
+}
+.btn-cute {
+  background-color: #ff4b82;
+  color: white;
+  font-family: "Comic Sans MS", cursive;
+  border-radius: 15px;
+  transition: all 0.3s ease;
+}
+
+.btn-cute:hover {
+  background-color: #ff85a1;
+  box-shadow: 0 5px 10px rgba(255, 75, 130, 0.3);
+}
+
+.form-label {
+  font-size: 1.1rem;
+  font-weight: bold;
 }

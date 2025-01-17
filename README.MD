@@ -107,3 +107,11 @@ i. setting create user di dshboardCntroller
 j. tambah route post di dashbordRoute
 k. Middleware : agar dari view engine form kebaca (request body) nya
 http://localhost:3002/dashboard/admin/
+
+output:
+
+<p align="center">
+  <img src="public/images/output/Screenshot (1319).png" alt="alt text" width="300" />
+  <img src="public/images/output/Screenshot (1320).png" alt="alt text" width="300" />
+  <img src="public/images/output/Screenshot (1321).png" alt="alt text" width="300" />
+</p>

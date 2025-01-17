@@ -1,5 +1,6 @@
 // 5. package morgan
 const morgan = require("morgan");
+const path = require("path");
 const express = require("express");
 const usersRoute = require("./routes/usersRoute");
 const carsRoute = require("./routes/carsRoute");
@@ -46,16 +47,27 @@ app.use(express.static(`${__dirname}/public`));
 
 // a. panggil view engine ejs
 app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "views"));
 
-// app.use(expressEJSLayout);
-// app.set("layout", "layout");
+app.use(expressEJSLayout);
+app.set("layout", "layout");
+
+// Middleware untuk memberikan default title
+app.use((req, res, next) => {
+  res.locals.title = "Default Title";
+  next();
+});
 
 // b. buat url/API dashboard
 app.get("/dashboard/admin/", async (req, res) => {
   try {
     // panggil respon render yang ejs
-    res.render("index", {
-      greeting: "Hello FSW 2 dengan data dinamis, kalian luar biasa",
+    // res.render("index", {
+    //   greeting: "Hello FSW 2 dengan data dinamis, kalian luar biasa",
+    // });
+    res.render("layout", {
+      title: "Dashboard",
+      body: "<h1>Welcome to the Dashboard</h1>",
     });
   } catch (error) {
     console.log(error);

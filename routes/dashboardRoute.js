@@ -15,6 +15,7 @@ router.post(
   upload.single("photo"),
   dashboardController.createUser
 );
+router.get("/users/:id", dashboardController.getUserById);
 // view engine = gak ada put/patch dan delete
 
 module.exports = router;
